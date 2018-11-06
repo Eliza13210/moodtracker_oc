@@ -1,4 +1,4 @@
-package com.oc.liza.moodtrackeroc;
+package com.oc.liza.moodtrackeroc.model;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -19,9 +19,8 @@ public class VerticalViewPager extends ViewPager {
     }
 
     private void init() {
-        // The majority of the magic happens here
         setPageTransformer(true, new VerticalPageTransformer());
-        // The easiest way to get rid of the overscroll drawing that happens on the left and right
+        // Delete overscroll drawing that happens on the left and right
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -77,5 +76,6 @@ public class VerticalViewPager extends ViewPager {
     public boolean onTouchEvent(MotionEvent ev) {
         return super.onTouchEvent(swapXY(ev));
     }
+
 
 }

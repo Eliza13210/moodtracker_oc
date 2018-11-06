@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,10 +8,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.oc.liza.moodtrackeroc.MainActivity"
-    android:background="@color/light_sage">
+    >
 
-    <!-- activity_screen_slide.xml -->
-    <com.oc.liza.moodtrackeroc.VerticalViewPager
+    <!-- screen_slide.xml -->
+    <com.oc.liza.moodtrackeroc.model.VerticalViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
