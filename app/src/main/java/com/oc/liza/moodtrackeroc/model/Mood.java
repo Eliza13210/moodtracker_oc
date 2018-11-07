@@ -1,8 +1,9 @@
 package com.oc.liza.moodtrackeroc.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Mood {
+public class Mood implements Serializable{
 
     //mood number check with list in screenslide
     private int mood;
@@ -10,7 +11,7 @@ public class Mood {
 
     public Mood(){}
 
-    public Mood(int mood ){
+    public Mood(int mood, Date date ){
         this.mood=mood;
     }
 
@@ -26,6 +27,11 @@ public class Mood {
     }
     public Date getDate() {
         return date;
+    }
+    public String toString(){
+        String str=String.valueOf(date) + String.valueOf(mood);
+        return str;
+
     }
 
 
