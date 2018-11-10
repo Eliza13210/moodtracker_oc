@@ -1,6 +1,8 @@
 package com.oc.liza.moodtrackeroc;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -13,15 +15,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.oc.liza.moodtrackeroc.model.Mood;
-import com.oc.liza.moodtrackeroc.model.MoodList;
 import com.oc.liza.moodtrackeroc.model.ScreenSlide;
 import com.oc.liza.moodtrackeroc.model.VerticalViewPager;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private VerticalViewPager mViewPager;
     private ScreenSlide mAdapter;
@@ -29,14 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mHistoryBtn;
     private String mComment = "";
     private Date mCurrentTime;
-    private MoodList mMoodList;
+    private Mood mood;
+    private List<Mood> mMoodList = new ArrayList<>();
+    private String filename = "moodsList.txt";
+    private FileOutputStream outputStream;
+    private FileInputStream fis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMoodList=new MoodList();
+        //fetch saved mood list
+        readFile();
 
         //Button to add a comment
         mCommentBtn=findViewById(R.id.commentButton);
@@ -54,36 +69,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent history = new Intent(MainActivity.this, History.class);
+                history.putExtra("mMoodList", (Serializable) mMoodList);
+                startActivity(history);
             }
         });
 
-        //Here I put the slide up and down function
+        // Slide up and down function
         mViewPager = findViewById(R.id.pager);
         mAdapter = new ScreenSlide(this);
         mViewPager.setAdapter(mAdapter);
 
         //Put the happy smiley as first image when app is launched
         mViewPager.setCurrentItem(3);
-
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {}
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             public void onPageSelected(int position) {
-                int pos=getMood();
-                Mood mood=new Mood(pos, mCurrentTime);
 
-                TextView tv=findViewById(R.id.txt);
-                tv.setText("saved");
+                mCurrentTime = Calendar.getInstance().getTime();
+                mood=new Mood(position, mCurrentTime, mComment);
+                mMoodList.add(mood);
+                save();
             }
         });
-
-
-        mCurrentTime = Calendar.getInstance().getTime();
-        //at midnight save
-
-
     }
 
     private int getMood(){
@@ -98,9 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
     final EditText input = new EditText(this);
     input.setTextColor(Color.BLACK);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        builder.setView(input);
+    input.setInputType(InputType.TYPE_CLASS_TEXT);
+    builder.setView(input);
 
     // Set up the buttons
     builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
@@ -119,6 +128,40 @@ public class MainActivity extends AppCompatActivity {
     });
 
         builder.show();
+    }
+
+    public void save() {
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+            oos.writeObject(mMoodList);
+            TextView tv=findViewById(R.id.txt);
+
+            tv.setText("saved: " + mood.toString());
+            oos.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readFile(){
+        try (
+                FileInputStream fis= openFileInput(filename);
+             BufferedInputStream bis = new BufferedInputStream(fis);
+             ObjectInputStream ois = new ObjectInputStream(bis) ) {
+             mMoodList= (List<Mood>) ois.readObject();
+
+            ois.close();
+            bis.close();
+            fis.close();
+        }	catch (FileNotFoundException e) {
+            System.err.println("Aucun humeur sauvegardé ! ");
+        } catch (IOException e) {
+            System.err.println("Erreur de lecture du fichier de sauvegarde !");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
