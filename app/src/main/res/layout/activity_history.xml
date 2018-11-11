@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Il y a cinq jours"
+        android:text="Il y a quatre jours"
         />
     <TextView
         android:id="@+id/fifth"
@@ -39,21 +39,21 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Il y a cinq jours"/>
+        android:text="Il y a trois jours"/>
     <TextView
         android:id="@+id/sixt"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Il y a cinq jours"/>
+        android:text="Avant hier"/>
     <TextView
         android:id="@+id/seventh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Il y a cinq jours"/>
+        android:text="Hier"/>
 
 
 </LinearLayout>

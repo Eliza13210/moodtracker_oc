@@ -7,11 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.oc.liza.moodtrackeroc.MainActivity"
+    tools:context="com.oc.liza.moodtrackeroc.controler.MainActivity"
     >
 
     <!-- screen_slide.xml -->
-    <com.oc.liza.moodtrackeroc.model.VerticalViewPager
+    <com.oc.liza.moodtrackeroc.view.VerticalViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"

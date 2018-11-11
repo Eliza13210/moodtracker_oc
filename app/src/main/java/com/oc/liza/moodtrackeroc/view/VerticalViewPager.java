@@ -1,4 +1,4 @@
-package com.oc.liza.moodtrackeroc.model;
+package com.oc.liza.moodtrackeroc.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
