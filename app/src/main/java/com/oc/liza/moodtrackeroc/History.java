@@ -1,9 +1,13 @@
 package com.oc.liza.moodtrackeroc;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.model.Mood;
 
@@ -38,13 +42,13 @@ public class History extends AppCompatActivity {
         tvSix=findViewById(R.id.sixt);
         tvSeven=findViewById(R.id.seventh);
 
-        moodWeek(0,tvOne);
-        moodWeek(1, tvTwo);
-        moodWeek(2,tvThree);
-        moodWeek(3,tvFour);
-        moodWeek(4,tvFive);
-        moodWeek(5,tvSix);
-        moodWeek(6,tvSeven);
+        moodWeek(1,tvOne);
+        moodWeek(2, tvTwo);
+        moodWeek(3,tvThree);
+        moodWeek(4,tvFour);
+        moodWeek(5,tvFive);
+        moodWeek(6,tvSix);
+        moodWeek(7,tvSeven);
 
     }
 
@@ -64,8 +68,20 @@ public class History extends AppCompatActivity {
                 int mInt = mood.getMood();
                 int bgColor = Color.parseColor(bg_color[mInt]);
                 textView.setBackgroundColor(bgColor);
-                String str = mMoodList.get(listNumber).toString();
-                textView.setText("read: " + str);
+                if(mood.getComment().length()>0){
+                    final String comment = mood.getComment().toString();
+                    Drawable image = getResources().getDrawable(R.drawable.ic_comment_black_48px);
+                    int h=image.getIntrinsicHeight();
+                    int w=image.getIntrinsicWidth();
+                    image.setBounds(0,0,h, w);
+                    textView.setCompoundDrawables(null,null,image, null);
+                    textView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View textView) {
+                        Toast.makeText(getApplicationContext(),comment, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                }
             }catch(IndexOutOfBoundsException e) {
                 textView.setText("Aucun humeur sauvgardé pour ce jour");
             }

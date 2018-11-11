@@ -9,45 +9,51 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Hello"
+        android:text="Il y a une semaine"
         />
     <TextView
         android:id="@+id/second"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"/>
+        android:background="@color/warm_grey"
+        android:text="Il y a six jours"/>
     <TextView
         android:id="@+id/third"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"/>
+        android:background="@color/warm_grey"
+        android:text="Il y a cinq jours"/>
     <TextView
         android:id="@+id/fourth"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:text="Il y a cinq jours"
         />
     <TextView
         android:id="@+id/fifth"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"/>
+        android:background="@color/warm_grey"
+        android:text="Il y a cinq jours"/>
     <TextView
         android:id="@+id/sixt"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"/>
+        android:background="@color/warm_grey"
+        android:text="Il y a cinq jours"/>
     <TextView
         android:id="@+id/seventh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"/>
+        android:background="@color/warm_grey"
+        android:text="Il y a cinq jours"/>
 
 
 </LinearLayout>

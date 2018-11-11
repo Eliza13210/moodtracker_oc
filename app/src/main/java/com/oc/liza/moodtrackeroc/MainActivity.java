@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         //fetch saved mood list
         readFile();
+        mMoodList.clear();
+
 
         //Button to add a comment
         mCommentBtn=findViewById(R.id.commentButton);
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         mHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                save();
+                mComment="";
 
                 Intent history = new Intent(MainActivity.this, History.class);
                 history.putExtra("mMoodList", (Serializable) mMoodList);
@@ -87,12 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             public void onPageSelected(int position) {
-
-                mCurrentTime = Calendar.getInstance().getTime();
-                mood=new Mood(position, mCurrentTime, mComment);
-                mMoodList.add(mood);
-                save();
-            }
+                }
         });
     }
 
@@ -131,13 +131,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void save() {
+        int position= mViewPager.getCurrentItem();
+        mCurrentTime = Calendar.getInstance().getTime();
+        mood=new Mood(position, mCurrentTime, mComment);
+        mMoodList.add(mood);
         try {
             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
             oos.writeObject(mMoodList);
-            TextView tv=findViewById(R.id.txt);
 
-            tv.setText("saved: " + mood.toString());
             oos.close();
             outputStream.close();
         } catch (Exception e) {
