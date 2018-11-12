@@ -9,6 +9,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Il y a une semaine"
         />
     <TextView
@@ -17,6 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Il y a six jours"/>
     <TextView
         android:id="@+id/third"
@@ -24,6 +26,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Il y a cinq jours"/>
     <TextView
         android:id="@+id/fourth"
@@ -31,6 +34,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Il y a quatre jours"
         />
     <TextView
@@ -39,6 +43,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Il y a trois jours"/>
     <TextView
         android:id="@+id/sixt"
@@ -46,9 +51,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:textColor="#000000"
         android:text="Avant hier"/>
     <TextView
         android:id="@+id/seventh"
+        android:textColor="#000000"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

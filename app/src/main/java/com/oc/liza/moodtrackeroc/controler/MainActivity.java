@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mHistoryBtn;
     private String mComment = "";
     private Calendar mCurrentTime;
-    private Mood mood;
+    private Mood mMood;
     private List<Mood> mMoodList = new ArrayList<>();
-    private String filename = "moodsList.txt";
-    private FileOutputStream outputStream;
-    private FileInputStream fis;
+    private String mFilename = "moodsList.txt";
+    private FileOutputStream mOutputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,37 @@ public class MainActivity extends AppCompatActivity {
         //fetch saved mood list
         readFile();
 
+        /*Try to add these moods to the list to test if history is showed correctly
+        mMoodList.clear();
+
+        Calendar c= Calendar.getInstance();
+        c.add(Calendar.DATE, -7);
+        mMoodList.add(new Mood(0,c , "5 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -6);
+        mMoodList.add(new Mood(1,c , "6 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -5);
+        mMoodList.add(new Mood(2,c , "7 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -4);
+        mMoodList.add(new Mood(3,c , "8 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -3);
+        mMoodList.add(new Mood(4,c , "9 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -2);
+        mMoodList.add(new Mood(1,c , "10 nov"));
+        c= Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        mMoodList.add(new Mood(2,c , "11 nov"));
+        c=Calendar.getInstance();
+        c.add(Calendar.DATE,-8);
+
+        //This one will be removed when saved() function is called
+        mMoodList.add(new Mood(0,c, "Il y a 8 jours"));
+        save();
+        */
 
         //Button to add a comment
         mCommentBtn = findViewById(R.id.commentButton);
@@ -69,32 +98,20 @@ public class MainActivity extends AppCompatActivity {
         mHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                checkDate();
-
+                //checkDate();
                 Intent history = new Intent(MainActivity.this, History.class);
                 history.putExtra("mMoodList", (Serializable) mMoodList);
                 startActivity(history);
             }
         });
 
-        // Slide up and down function
+        // Set slide up and down function
         mViewPager = findViewById(R.id.pager);
         mAdapter = new ScreenSlide(this);
         mViewPager.setAdapter(mAdapter);
 
         //Put the happy smiley as first image when app is launched
         mViewPager.setCurrentItem(3);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {
-            }
-
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            public void onPageSelected(int position) {
-            }
-        });
     }
 
     //Comment pop up dialog
@@ -110,48 +127,41 @@ public class MainActivity extends AppCompatActivity {
         // Set up the buttons
         builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+            public void onClick(DialogInterface dialog, int i) {
                 mComment = input.getText().toString();
                 dialog.dismiss();
             }
         });
         builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int i) {
                 dialog.cancel();
             }
         });
-
         builder.show();
     }
 
     private void save() {
-        int position = mViewPager.getCurrentItem();
-        mCurrentTime = Calendar.getInstance();
-        mood = new Mood(position, mCurrentTime, mComment);
-        mMoodList.add(mood);
 
-
-        if(!mMoodList.isEmpty()){
         //check if saved moods are older than 7 days and in that case remove it from the list
-        for(int i=0;i<mMoodList.size(); i++) {
-            Date oldest = mMoodList.get(i).getDate().getTime();
-            mCurrentTime.add(Calendar.DATE, -7);
-            Date dateSevenDaysAgo = mCurrentTime.getTime();
+        if(!mMoodList.isEmpty()){
+            for(int i=0;i<mMoodList.size(); i++) {
+            Date old = mMoodList.get(i).getDate().getTime();
+            Calendar cal=Calendar.getInstance();
+            cal.add(Calendar.DATE, -8);
+            Date dateSevenDaysAgo = cal.getTime();
 
-            if (oldest.before(dateSevenDaysAgo)) {
+            if (old.before(dateSevenDaysAgo)) {
                 mMoodList.remove(i);
             }
-        }
+          }
         }
         try {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+            mOutputStream = openFileOutput(mFilename, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(mOutputStream);
             oos.writeObject(mMoodList);
-
             oos.close();
-            outputStream.close();
+            mOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -160,16 +170,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void readFile() {
         try (
-                FileInputStream fis = openFileInput(filename);
+                FileInputStream fis = openFileInput(mFilename);
                 BufferedInputStream bis = new BufferedInputStream(fis);
                 ObjectInputStream ois = new ObjectInputStream(bis)) {
             mMoodList = (List<Mood>) ois.readObject();
-
             ois.close();
             bis.close();
             fis.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Aucun humeur sauvegardé ! ");
+            System.err.println("Le fichier est introuvable ! ");
         } catch (IOException e) {
             System.err.println("Erreur de lecture du fichier de sauvegarde !");
         } catch (ClassNotFoundException e) {
@@ -180,29 +189,56 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkDate(){
 
+        //Create a new mood
+        int position = mViewPager.getCurrentItem();
+        mCurrentTime = Calendar.getInstance();
+        mMood = new Mood(position, mCurrentTime, mComment);
+
+        //Compare the last saved mood with the actual to see if they are from the same day
         if(!mMoodList.isEmpty()) {
-            Calendar c1 = mMoodList.get(mMoodList.size()-1).getDate();
-            Calendar c2 = Calendar.getInstance();
-            int x = c2.compareTo(c1);
-            //The actual time greater than the last saved? returns 1
-            switch (x){
-                case 0:
+            int dayCurrentMood = mCurrentTime.get(Calendar.DAY_OF_MONTH);
+            int monthCurrentMood= mCurrentTime.get(Calendar.MONTH);
+
+            Calendar c=mMoodList.get(mMoodList.size()-1).getDate();
+
+            int lastSavedMoodDay=c.get(Calendar.DAY_OF_MONTH);
+            int lastSavedMoodMonth = c.get(Calendar.MONTH);
+
+                //If the two are from the same day, replace the old one with the recent
+                if(dayCurrentMood == lastSavedMoodDay && monthCurrentMood == lastSavedMoodMonth){
+                    mMoodList.set(mMoodList.size()-1, mMood);
                     save();
                     Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardé!", Toast.LENGTH_SHORT).show();
-                    break;
-                case 1:
+                }else{
+                    mMoodList.add(mMood);
+                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été ajouté à la liste!", Toast.LENGTH_SHORT).show();
                     save();
-                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardé!", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Toast.makeText(getApplicationContext(),"Votre humeur n'a pas été sauvgardé!", Toast.LENGTH_SHORT).show();
-                    break;
-            }
+                }
         }else{
+            mMoodList.add(mMood);
             save();
             Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardé!", Toast.LENGTH_SHORT).show();
         }
-        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+       checkDate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        checkDate();
+
+    }
 
 }
 

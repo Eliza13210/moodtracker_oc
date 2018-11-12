@@ -45,7 +45,6 @@ public class History extends AppCompatActivity {
         tvSix=findViewById(R.id.sixt);
         tvSeven=findViewById(R.id.seventh);
 
-
         moodWeek(-7,tvOne);
         moodWeek(-6, tvTwo);
         moodWeek(-5,tvThree);
@@ -53,29 +52,27 @@ public class History extends AppCompatActivity {
         moodWeek(-3,tvFive);
         moodWeek(-2,tvSix);
         moodWeek(-1,tvSeven);
-
-    }
+}
 
     /**
-     * This method serves to set the correct background color on the seven
-     * TextViews representing the last week. The mood is represented by the corresponding
-     * color and is set to the corresponding day.
+     * This method serves to set the background color representing the mood selected for the corresponding
+     * day on the seven TextViews representing the last week.
      *
      * @param daysAgo refers to how many days has passed since the mood was saved
-     * @param textView refers to the corresponding textview where it will be shown
+     * @param textView refers to the corresponding text view where it will be shown
      */
 
         private void moodWeek(int daysAgo, TextView textView ){
           try{
-                //Compare the mood date to the textviews date
+                //Compare the mood date to the text view's date
                 for(int i=0;i<mMoodList.size();i++){
-                int cMoodDay = mMoodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
-                int cMoodMonth= mMoodList.get(i).getDate().get(Calendar.MONTH);
+                    int cMoodDay = mMoodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
+                    int cMoodMonth= mMoodList.get(i).getDate().get(Calendar.MONTH);
 
-                Calendar c=Calendar.getInstance();
-                c.add(Calendar.DATE, daysAgo);
-                int c2Month = c.get(Calendar.MONTH);
-                int c2Day=c.get(Calendar.DAY_OF_MONTH);
+                    Calendar c=Calendar.getInstance();
+                    c.add(Calendar.DATE, daysAgo);
+                    int c2Month = c.get(Calendar.MONTH);
+                    int c2Day=c.get(Calendar.DAY_OF_MONTH);
 
                 //If dates are matched; Set the background color and comment to the corresponding textview
 
@@ -105,7 +102,6 @@ public class History extends AppCompatActivity {
                 textView.setText("Aucun humeur sauvgardé pour ce jour");
             }
         }
-
 
 }
 
