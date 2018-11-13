@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
