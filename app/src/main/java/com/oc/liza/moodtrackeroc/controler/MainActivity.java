@@ -35,15 +35,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private VerticalViewPager mViewPager;
-    private ScreenSlide mAdapter;
-    private ImageButton mCommentBtn;
-    private ImageButton mHistoryBtn;
     private String mComment = "";
-    private Calendar mCurrentTime;
     private Mood mMood;
     private List<Mood> mMoodList = new ArrayList<>();
     private String mFilename = "moodsList.txt";
-    private FileOutputStream mOutputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,20 +81,29 @@ public class MainActivity extends AppCompatActivity {
         */
 
         //Button to add a comment
-        mCommentBtn = findViewById(R.id.commentButton);
-        mCommentBtn.setOnClickListener(new View.OnClickListener() {
+        ImageButton commentBtn = findViewById(R.id.commentButton);
+        commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 commentPopUp();
             }
         });
 
-        //Button to access history
-        mHistoryBtn = findViewById(R.id.historyButton);
-        mHistoryBtn.setOnClickListener(new View.OnClickListener() {
+        //Button to share your mood by SMS
+        ImageButton sharBtn = findViewById(R.id.shareButton);
+        sharBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //checkDate();
+                sharePopUp();
+            }
+        });
+
+        //Button to access history
+        ImageButton historyBtn = findViewById(R.id.historyButton);
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 Intent history = new Intent(MainActivity.this, History.class);
                 history.putExtra("mMoodList", (Serializable) mMoodList);
                 startActivity(history);
@@ -108,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set slide up and down function
         mViewPager = findViewById(R.id.pager);
-        mAdapter = new ScreenSlide(this);
-        mViewPager.setAdapter(mAdapter);
+        ScreenSlide adapter = new ScreenSlide(this);
+        mViewPager.setAdapter(adapter);
 
         //Put the happy smiley as first image when app is launched
         mViewPager.setCurrentItem(3);
@@ -118,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     //Comment pop up dialog
     private void commentPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+
         builder.setTitle("Commentaire");
 
         final EditText input = new EditText(this);
@@ -143,28 +148,31 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.show();
     }
-//Share mood with a friend::::
+//Share mood by sms
     private void sharePopUp() {
         AlertDialog.Builder buildShare = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        buildShare.setTitle("Partagez votre humeur avec un ami?");
+        buildShare.setTitle("Partagez votre humeur");
 
         final EditText inputShare = new EditText(this);
-        inputShare.setTextColor(Color.BLACK);
+        inputShare.setTextColor(Color.DKGRAY);
+        inputShare.setHintTextColor(Color.LTGRAY);
+        inputShare.setHint("N° de téléphone");
         inputShare.setInputType(InputType.TYPE_CLASS_PHONE);
+
         buildShare.setView(inputShare);
 
         // Set up the buttons
         buildShare.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                String numero = inputShare.getText().toString();
+                String number = inputShare.getText().toString();
 
                 try {
-                    if (numero.length() >= 6 && mMood.toString().length() > 0) {
-                        SmsManager.getDefault().sendTextMessage(numero, null, mMood.toString(), null, null);
+                    if (number.length() >= 8 && mMood.toString().length() > 0) {
+                        SmsManager.getDefault().sendTextMessage(number, null, mMood.toString(), null, null);
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Entrez le numero de téléphone", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Le numéro de téléphone n'est pas valide", Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){
                     Toast.makeText(getApplicationContext(), "Le message n'a pas été envoyé", Toast.LENGTH_SHORT).show();
@@ -197,11 +205,11 @@ public class MainActivity extends AppCompatActivity {
           }
         }
         try {
-            mOutputStream = openFileOutput(mFilename, Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(mOutputStream);
+            FileOutputStream outputStream = openFileOutput(mFilename, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
             oos.writeObject(mMoodList);
             oos.close();
-            mOutputStream.close();
+            outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,13 +239,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Create a new mood
         int position = mViewPager.getCurrentItem();
-        mCurrentTime = Calendar.getInstance();
-        mMood = new Mood(position, mCurrentTime, mComment);
+        Calendar currentTime = Calendar.getInstance();
+        mMood = new Mood(position, currentTime, mComment);
 
         //Compare the last saved mood with the actual to see if they are from the same day
         if(!mMoodList.isEmpty()) {
-            int dayCurrentMood = mCurrentTime.get(Calendar.DAY_OF_MONTH);
-            int monthCurrentMood= mCurrentTime.get(Calendar.MONTH);
+            int dayCurrentMood = currentTime.get(Calendar.DAY_OF_MONTH);
+            int monthCurrentMood= currentTime.get(Calendar.MONTH);
 
             Calendar c=mMoodList.get(mMoodList.size()-1).getDate();
 
@@ -248,21 +256,20 @@ public class MainActivity extends AppCompatActivity {
                 if(dayCurrentMood == lastSavedMoodDay && monthCurrentMood == lastSavedMoodMonth){
                     mMoodList.set(mMoodList.size()-1, mMood);
                     save();
-                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardé!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardée!", Toast.LENGTH_SHORT).show();
                 }else{
                     mMoodList.add(mMood);
-                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été ajouté à la liste!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Votre humeur du jour a été ajoutée à la liste!", Toast.LENGTH_SHORT).show();
                     save();
                 }
         }else{
             mMoodList.add(mMood);
             save();
-            Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardé!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardée!", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    @Override
+ @Override
     protected void onPause() {
         super.onPause();
     }

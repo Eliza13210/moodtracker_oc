@@ -1,5 +1,6 @@
 package com.oc.liza.moodtrackeroc.controler;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,21 +12,12 @@ import android.widget.Toast;
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class History extends AppCompatActivity {
-    private String filename = "moodsList.txt";
-    private TextView tvOne;
-    private TextView tvTwo;
-    private TextView tvThree;
-    private TextView tvFour;
-    private TextView tvFive;
-    private TextView tvSix;
-    private TextView tvSeven;
     private List<Mood> mMoodList=new ArrayList<>();
     private String[] bg_color={"#ffde3c50", "#ff9b9b9b", "#a5468ad9","#ffb8e986","#fff9ec4f"};
 
@@ -33,26 +25,35 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<Mood> questions = new ArrayList<Mood>();
+
         mMoodList = (ArrayList<Mood>) getIntent().getSerializableExtra("mMoodList");
         setContentView(R.layout.activity_history);
 
-        tvOne=findViewById(R.id.first);
-        tvTwo=findViewById(R.id.second);
-        tvThree=findViewById(R.id.third);
-        tvFour=findViewById(R.id.fourth);
-        tvFive=findViewById(R.id.fifth);
-        tvSix=findViewById(R.id.sixt);
-        tvSeven=findViewById(R.id.seventh);
+        TextView statistics = findViewById(R.id.statistics);
+        TextView tvOne = findViewById(R.id.first);
+        TextView tvTwo = findViewById(R.id.second);
+        TextView tvThree = findViewById(R.id.third);
+        TextView tvFour = findViewById(R.id.fourth);
+        TextView tvFive = findViewById(R.id.fifth);
+        TextView tvSix = findViewById(R.id.sixt);
+        TextView tvSeven = findViewById(R.id.seventh);
 
-        moodWeek(-7,tvOne);
+        getStatistic();
+
+        moodWeek(-7, tvOne);
         moodWeek(-6, tvTwo);
-        moodWeek(-5,tvThree);
-        moodWeek(-4,tvFour);
-        moodWeek(-3,tvFive);
-        moodWeek(-2,tvSix);
-        moodWeek(-1,tvSeven);
+        moodWeek(-5, tvThree);
+        moodWeek(-4, tvFour);
+        moodWeek(-3, tvFive);
+        moodWeek(-2, tvSix);
+        moodWeek(-1, tvSeven);
 }
+
+        private void getStatistic(){
+
+
+
+        }
 
     /**
      * This method serves to set the background color representing the mood selected for the corresponding
@@ -83,7 +84,7 @@ public class History extends AppCompatActivity {
                     int bgColor = Color.parseColor(bg_color[mInt]);
                     textView.setBackgroundColor(bgColor);
                     if(mood.getComment().length()>0) {
-                        final String comment = mood.getComment().toString();
+                        final String comment = mood.getComment();
                         Drawable image = getResources().getDrawable(R.drawable.ic_comment_black_48px);
                         int h = image.getIntrinsicHeight();
                         int w = image.getIntrinsicWidth();
@@ -99,7 +100,8 @@ public class History extends AppCompatActivity {
                 }
                 }
             }catch(IndexOutOfBoundsException e) {
-                textView.setText("Aucun humeur sauvgardé pour ce jour");
+              String str="Aucun humeur sauvgardé pour ce jour";
+                textView.setText(str);
             }
         }
 

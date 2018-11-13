@@ -1,5 +1,6 @@
 package com.oc.liza.moodtrackeroc.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -20,7 +21,7 @@ public class VerticalViewPager extends ViewPager {
 
     private void init() {
         setPageTransformer(true, new VerticalPageTransformer());
-        // Delete overscroll drawing that happens on the left and right
+        // Delete the function over scroll drawing that happens on the left and right
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -72,6 +73,7 @@ public class VerticalViewPager extends ViewPager {
         return intercepted;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return super.onTouchEvent(swapXY(ev));
