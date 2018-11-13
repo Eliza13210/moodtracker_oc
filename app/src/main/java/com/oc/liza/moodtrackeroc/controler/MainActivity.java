@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -129,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 mComment = input.getText().toString();
+                checkDate();
+                sharePopUp();
                 dialog.dismiss();
             }
         });
@@ -139,6 +142,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+//Share mood with a friend::::
+    private void sharePopUp() {
+        AlertDialog.Builder buildShare = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        buildShare.setTitle("Partagez votre humeur avec un ami?");
+
+        final EditText inputShare = new EditText(this);
+        inputShare.setTextColor(Color.BLACK);
+        inputShare.setInputType(InputType.TYPE_CLASS_PHONE);
+        buildShare.setView(inputShare);
+
+        // Set up the buttons
+        buildShare.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                String numero = inputShare.getText().toString();
+
+                try {
+                    if (numero.length() >= 6 && mMood.toString().length() > 0) {
+                        SmsManager.getDefault().sendTextMessage(numero, null, mMood.toString(), null, null);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Entrez le numero de téléphone", Toast.LENGTH_SHORT).show();
+                    }
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(), "Le message n'a pas été envoyé", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        buildShare.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.cancel();
+            }
+        });
+        buildShare.show();
     }
 
     private void save() {
@@ -230,14 +270,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-       checkDate();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         checkDate();
-
+        sharePopUp();
     }
 
 }
