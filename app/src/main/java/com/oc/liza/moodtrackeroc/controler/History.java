@@ -1,6 +1,5 @@
 package com.oc.liza.moodtrackeroc.controler;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,6 @@ public class History extends AppCompatActivity {
         mMoodList = (ArrayList<Mood>) getIntent().getSerializableExtra("mMoodList");
         setContentView(R.layout.activity_history);
 
-        TextView statistics = findViewById(R.id.statistics);
         TextView tvOne = findViewById(R.id.first);
         TextView tvTwo = findViewById(R.id.second);
         TextView tvThree = findViewById(R.id.third);
@@ -36,8 +34,6 @@ public class History extends AppCompatActivity {
         TextView tvFive = findViewById(R.id.fifth);
         TextView tvSix = findViewById(R.id.sixt);
         TextView tvSeven = findViewById(R.id.seventh);
-
-        getStatistic();
 
         moodWeek(-7, tvOne);
         moodWeek(-6, tvTwo);
@@ -47,13 +43,6 @@ public class History extends AppCompatActivity {
         moodWeek(-2, tvSix);
         moodWeek(-1, tvSeven);
 }
-
-        private void getStatistic(){
-
-
-
-        }
-
     /**
      * This method serves to set the background color representing the mood selected for the corresponding
      * day on the seven TextViews representing the last week.
