@@ -1,9 +1,14 @@
 package com.oc.liza.moodtrackeroc.controler;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +17,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.R;
@@ -39,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private Mood mMood;
     private List<Mood> mMoodList = new ArrayList<>();
     private String mFilename = "moodsList.txt";
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS=1;
+    private String mNumber="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Button to share your mood by SMS
-        ImageButton sharBtn = findViewById(R.id.shareButton);
-        sharBtn.setOnClickListener(new View.OnClickListener() {
+        ImageButton shareBtn = findViewById(R.id.shareButton);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sharePopUp();
@@ -136,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 mComment = input.getText().toString();
                 checkDate();
-                sharePopUp();
                 dialog.dismiss();
             }
         });
@@ -150,34 +157,42 @@ public class MainActivity extends AppCompatActivity {
     }
 //Share mood by sms
     private void sharePopUp() {
+        mMood=new Mood(mViewPager.getCurrentItem(),Calendar.getInstance(),mComment);
+
         AlertDialog.Builder buildShare = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        buildShare.setTitle("Partagez votre humeur");
+        buildShare.setTitle("Choissisez votre mode de partage");
+        LinearLayout layout = new LinearLayout(getApplicationContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
 
         final EditText inputShare = new EditText(this);
         inputShare.setTextColor(Color.DKGRAY);
         inputShare.setHintTextColor(Color.LTGRAY);
         inputShare.setHint("N° de téléphone");
         inputShare.setInputType(InputType.TYPE_CLASS_PHONE);
+        layout.addView(inputShare);
 
-        buildShare.setView(inputShare);
+        final EditText inputEmail = new EditText(this);
+        inputEmail.setTextColor(Color.DKGRAY);
+        inputEmail.setHintTextColor(Color.LTGRAY);
+        inputEmail.setHint("Adresse e-mail");
+        inputEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        layout.addView(inputEmail);
+        buildShare.setView(layout);
 
         // Set up the buttons
         buildShare.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                String number = inputShare.getText().toString();
+                 mNumber = inputShare.getText().toString();
+                String adress = inputEmail.getText().toString();
 
-                try {
-                    if (number.length() >= 8 && mMood.toString().length() > 0) {
-                        SmsManager.getDefault().sendTextMessage(number, null, mMood.toString(), null, null);
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Le numéro de téléphone n'est pas valide", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-                    Toast.makeText(getApplicationContext(), "Le message n'a pas été envoyé", Toast.LENGTH_SHORT).show();
+                if (adress.isEmpty()) {
+                    sendSMS();
+                 dialog.dismiss();
+                } else {
+                    sendEmail(adress);
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
             }
         });
         buildShare.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -186,7 +201,53 @@ public class MainActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-        buildShare.show();
+         buildShare.show();
+    }
+
+    private void sendSMS() {
+        //check if permission to send sms and if not so, ask for permission
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
+            // Permission has already been granted
+
+    }
+        @Override
+        public void onRequestPermissionsResult(int requestCode,
+        String permissions[], int[] grantResults) {
+            switch (requestCode) {
+                case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                    // permission was granted
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        try {
+                            SmsManager.getDefault().sendTextMessage(mNumber, null, mMood.toString(), null, null);
+
+                            Toast.makeText(getApplicationContext(), "SMS envoyé", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Le message n'a pas été envoyé ", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                        // permission denied
+                }
+            }
+        }
+
+
+    private void sendEmail(String adress){
+         Intent send = new Intent(Intent.ACTION_SENDTO);
+        String uriText = "mailto:" + Uri.encode(adress) +
+                "?subject=" + Uri.encode("Je voudrais partager mon humeur") +
+                "&body=" + Uri.encode(mMood.toString());
+        Uri uri = Uri.parse(uriText);
+        send.setData(uri);
+        startActivity(Intent.createChooser(send, "Send mail"));
     }
 
     private void save() {
@@ -233,8 +294,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
     private void checkDate(){
 
         //Create a new mood
@@ -268,25 +327,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Votre humeur du jour a été sauvgardée!", Toast.LENGTH_SHORT).show();
         }
     }
-
- @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         checkDate();
         sharePopUp();
     }
-
 }
 
 
