@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/main_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.oc.liza.moodtrackeroc.controler.MainActivity"
-    >
+    tools:context="com.oc.liza.moodtrackeroc.controler.MainActivity">
 
     <!-- screen_slide.xml -->
-    <com.oc.liza.moodtrackeroc.view.VerticalViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.oc.liza.moodtrackeroc.view.VerticalViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -21,24 +18,24 @@
         android:id="@+id/commentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        app:srcCompat="@drawable/ic_note_add_black"
         android:background="@null"
-        android:contentDescription="@string/comment" />
+        android:contentDescription="@string/comment"
+        app:srcCompat="@drawable/ic_note_add_black" />
 
     <ImageButton
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        app:srcCompat="@drawable/ic_share_black"
         android:background="@null"
-        android:contentDescription="@string/share_mood" />
+        android:contentDescription="@string/share_mood"
+        app:srcCompat="@drawable/ic_share_black" />
 
     <ImageButton
         android:id="@+id/historyButton"
@@ -47,7 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        app:srcCompat="@drawable/ic_history_black"
         android:background="@null"
-        android:contentDescription="@string/history" />
+        android:contentDescription="@string/history"
+        app:srcCompat="@drawable/ic_history_black" />
 </RelativeLayout>

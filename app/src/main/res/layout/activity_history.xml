@@ -1,75 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/light_grey">
 
     <TextView
         android:id="@+id/first"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
-        android:textColor="#000000"
         android:text="@string/seven_days"
-        android:textSize="@dimen/text_size"
-        />
+        android:textColor="#000000"
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/second"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:text="@string/six_days"
         android:textColor="#000000"
-        android:textSize="@dimen/text_size"
-        android:text="@string/six_days"/>
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/third"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:text="@string/five_days"
         android:textColor="#000000"
-        android:textSize="@dimen/text_size"
-        android:text="@string/five_days"/>
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/fourth"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:textColor="#000000"
-        android:textSize="@dimen/text_size"
         android:text="@string/four_days"
-        />
+        android:textColor="#000000"
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/fifth"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:text="@string/three_days"
         android:textColor="#000000"
-        android:textSize="@dimen/text_size"
-        android:text="@string/three_days"/>
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/sixt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
+        android:text="@string/two_days"
         android:textColor="#000000"
-        android:textSize="@dimen/text_size"
-        android:text="@string/two_days"/>
+        android:textSize="@dimen/text_size" />
+
     <TextView
         android:id="@+id/seventh"
-        android:textColor="#000000"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
-        android:textSize="@dimen/text_size"
-        android:text="@string/yesterday"/>
+        android:text="@string/yesterday"
+        android:textColor="#000000"
+        android:textSize="@dimen/text_size" />
 
 
 </LinearLayout>

@@ -57,6 +57,28 @@ public class MainActivity extends AppCompatActivity {
 
         //fetch saved mood list
         readFile();
+        mMoodList.clear();
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -7);
+        mMoodList.add(new Mood(0, c, "Seven days ago"));
+         c = Calendar.getInstance();
+        c.add(Calendar.DATE, -6);
+        mMoodList.add(new Mood(1, c, "Six days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -5);
+        mMoodList.add(new Mood(2, c, "Five days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -4);
+        mMoodList.add(new Mood(3, c, "Four days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -3);
+        mMoodList.add(new Mood(4, c, "Three days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -2);
+        mMoodList.add(new Mood(3, c, "Two days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        mMoodList.add(new Mood(4, c, "One day ago"));
 
         //Button to add a comment
         ImageButton commentBtn = findViewById(R.id.commentButton);
