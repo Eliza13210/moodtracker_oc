@@ -47,7 +47,7 @@ public class History extends AppCompatActivity {
      * This method serves to set the background color representing the mood selected for the corresponding
      * day on the seven TextViews representing the last week.
      *
-     * @param daysAgo refers to how many days has passed since the mood was saved
+     * @param daysAgo refers to how many days have passed since the mood was saved
      * @param textView refers to the corresponding text view where it will be shown
      */
 

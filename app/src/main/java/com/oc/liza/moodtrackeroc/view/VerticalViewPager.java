@@ -30,8 +30,7 @@ public class VerticalViewPager extends ViewPager {
         @Override
         public void transformPage(View view, float position) {
 
-            if (position < -1) { // [-Infinity,-1)
-                // This page is way off-screen to the left.
+            if (position < -1) {
                 view.setAlpha(0);
 
             } else if (position <= 1) { // [-1,1]
@@ -44,8 +43,7 @@ public class VerticalViewPager extends ViewPager {
                 float yPosition = position * view.getHeight();
                 view.setTranslationY(yPosition);
 
-            } else { // (1,+Infinity]
-                // This page is way off-screen to the right.
+            } else {
                 view.setAlpha(0);
             }
         }

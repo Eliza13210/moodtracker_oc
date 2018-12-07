@@ -12,7 +12,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Il y a une semaine"
+        android:text="@string/seven_days"
+        android:textSize="@dimen/text_size"
         />
     <TextView
         android:id="@+id/second"
@@ -21,7 +22,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Il y a six jours"/>
+        android:textSize="@dimen/text_size"
+        android:text="@string/six_days"/>
     <TextView
         android:id="@+id/third"
         android:layout_width="match_parent"
@@ -29,7 +31,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Il y a cinq jours"/>
+        android:textSize="@dimen/text_size"
+        android:text="@string/five_days"/>
     <TextView
         android:id="@+id/fourth"
         android:layout_width="match_parent"
@@ -37,7 +40,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Il y a quatre jours"
+        android:textSize="@dimen/text_size"
+        android:text="@string/four_days"
         />
     <TextView
         android:id="@+id/fifth"
@@ -46,7 +50,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Il y a trois jours"/>
+        android:textSize="@dimen/text_size"
+        android:text="@string/three_days"/>
     <TextView
         android:id="@+id/sixt"
         android:layout_width="match_parent"
@@ -54,7 +59,8 @@
         android:layout_weight="1"
         android:background="@color/warm_grey"
         android:textColor="#000000"
-        android:text="Avant hier"/>
+        android:textSize="@dimen/text_size"
+        android:text="@string/two_days"/>
     <TextView
         android:id="@+id/seventh"
         android:textColor="#000000"
@@ -62,7 +68,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/warm_grey"
-        android:text="Hier"/>
+        android:textSize="@dimen/text_size"
+        android:text="@string/yesterday"/>
 
 
 </LinearLayout>

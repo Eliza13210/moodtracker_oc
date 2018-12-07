@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MoodTracker OC</string>
+    <string name="seven_days">Il y a une semaine</string>
+    <string name="six_days">Il y a six jours</string>
+    <string name="five_days">Il y a cinq jours</string>
+    <string name="four_days">Il y a quatre jours</string>
+    <string name="three_days">Il y a trois jours</string>
+    <string name="two_days">Avant hier</string>
+    <string name="yesterday">Hier</string>
+    <string name="comment">Comment</string>
+    <string name="share_mood">Share mood</string>
+    <string name="history">History</string>
 </resources>

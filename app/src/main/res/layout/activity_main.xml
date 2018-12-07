@@ -25,7 +25,8 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         app:srcCompat="@drawable/ic_note_add_black"
-        android:background="@null"/>
+        android:background="@null"
+        android:contentDescription="@string/comment" />
 
     <ImageButton
         android:id="@+id/shareButton"
@@ -36,15 +37,17 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         app:srcCompat="@drawable/ic_share_black"
-        android:background="@null"/>
+        android:background="@null"
+        android:contentDescription="@string/share_mood" />
 
     <ImageButton
         android:id="@+id/historyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         app:srcCompat="@drawable/ic_history_black"
-        android:background="@null"/>
+        android:background="@null"
+        android:contentDescription="@string/history" />
 </RelativeLayout>
