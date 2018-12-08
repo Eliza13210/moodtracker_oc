@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
+import com.oc.liza.moodtrackeroc.utils.MoodListHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,13 +21,38 @@ import java.util.List;
 public class History extends AppCompatActivity {
     private List<Mood> mMoodList = new ArrayList<>();
     private String[] bg_color = {"#ffde3c50", "#ff9b9b9b", "#a5468ad9", "#ffb8e986", "#fff9ec4f"};
+    private MoodListHandler mMoodListHandler=new MoodListHandler(this);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMoodList = (ArrayList<Mood>) getIntent().getSerializableExtra("mMoodList");
+        mMoodList = mMoodListHandler.getMoodList();
+
+        mMoodList.clear();
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -7);
+        mMoodList.add(new Mood(0, c, "Seven days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -6);
+        mMoodList.add(new Mood(1, c, "Six days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -5);
+        mMoodList.add(new Mood(2, c, "Five days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -4);
+        mMoodList.add(new Mood(3, c, "Four days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -3);
+        mMoodList.add(new Mood(4, c, "Three days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -2);
+        mMoodList.add(new Mood(3, c, "Two days ago"));
+        c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        mMoodList.add(new Mood(4, c, "One day ago"));
+
         setContentView(R.layout.activity_history);
 
         TextView tvOne = findViewById(R.id.first);
