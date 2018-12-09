@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
+import com.oc.liza.moodtrackeroc.utils.CommentPopUp;
 import com.oc.liza.moodtrackeroc.utils.MoodListManager;
 import com.oc.liza.moodtrackeroc.utils.SharePopUp;
 import com.oc.liza.moodtrackeroc.view.ScreenSlide;
@@ -49,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commentPopUp();
+                int mood=mViewPager.getCurrentItem();
+                CommentPopUp popUp=new CommentPopUp(ctx, mood);
+
             }
         });
 
@@ -88,41 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Put the happy smiley as first image when app is launched
         mViewPager.setCurrentItem(3);
-    }
-
-    //Comment pop up dialog
-    public void commentPopUp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        final EditText input = new EditText(this);
-        builder.setTitle("Commentaire");
-        input.setTextColor(Color.BLACK);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.requestFocus();
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                mComment = input.getText().toString();
-                Calendar c = Calendar.getInstance();
-
-                mMood = new Mood(mViewPager.getCurrentItem(), c, mComment);
-                mMoodListManager.addMood(mMood);
-                mComment = "";
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-        dialog.show();
     }
 
 }
