@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.oc.liza.moodtrackeroc.model.Mood;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,23 +18,26 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MoodListHandler {
+public class MoodListManager {
     private List<Mood> moodList = new ArrayList<>();
-    private String filename = "moodsList.txt";
+    private File file;
+    private final static String filename = "moodsList.txt";
     private Context context;
 
-    public MoodListHandler(Context context) {
+    public MoodListManager(Context context) {
         this.context = context;
-        readFile();
+
     }
 
     public List<Mood> getMoodList() {
+        readFile();
         return moodList;
     }
 
+    //fetch the saved mood list
     private void readFile() {
         try (
-                FileInputStream fis = new FileInputStream(filename);
+                FileInputStream fis = new FileInputStream(new File(context.getFilesDir(), filename));
                 BufferedInputStream bis = new BufferedInputStream(fis);
                 ObjectInputStream ois = new ObjectInputStream(bis)) {
             moodList = (List<Mood>) ois.readObject();
@@ -47,37 +51,17 @@ public class MoodListHandler {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void save() {
-
-        //check if saved moods are older than 7 days and in that case remove it/them from the list
-        if (!moodList.isEmpty()) {
-            for (int i = 0; i < moodList.size(); i++) {
-                Date old = moodList.get(i).getDate().getTime();
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, -8);
-                Date dateSevenDaysAgo = cal.getTime();
-
-                if (old.before(dateSevenDaysAgo)) {
-                    moodList.remove(i);
-                }
-            }
-        }
-        try {
-            FileOutputStream outputStream = new FileOutputStream(filename);
-            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-            oos.writeObject(moodList);
-            oos.close();
-            outputStream.close();
-            Toast.makeText(context, "Votre humeur du jour a été sauvegardée!", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            System.err.println("Votre humeur du jour n'a pas pu être sauvegardée!");
-        }
+    //add new mood
+    public void addMood(Mood mood) {
+        readFile();
+        checkDate(mood);
     }
 
-
-    public void checkDate(Mood mood) {
+    //check if there is already a mood saved the same day, and in that case replace it
+    private void checkDate(Mood mood) {
 
         Calendar currentTime = Calendar.getInstance();
 
@@ -102,6 +86,33 @@ public class MoodListHandler {
         } else {
             moodList.add(mood);
             save();
+        }
+    }
+
+    private void save() {
+
+        //check if saved moods are older than 7 days and in that case remove it/them from the list
+        if (!moodList.isEmpty()) {
+            for (int i = 0; i < moodList.size(); i++) {
+                Date old = moodList.get(i).getDate().getTime();
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -8);
+                Date dateSevenDaysAgo = cal.getTime();
+
+                if (old.before(dateSevenDaysAgo)) {
+                    moodList.remove(i);
+                }
+            }
+        }
+        try {
+            FileOutputStream outputStream = new FileOutputStream(new File(context.getFilesDir(), filename));
+            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+            oos.writeObject(moodList);
+            oos.close();
+            outputStream.close();
+            Toast.makeText(context, "Votre humeur du jour a été sauvegardée!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            System.err.println("Votre humeur du jour n'a pas pu être sauvegardée!" + e);
         }
     }
 

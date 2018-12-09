@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
-import com.oc.liza.moodtrackeroc.utils.MoodListHandler;
+import com.oc.liza.moodtrackeroc.utils.MoodListManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,40 +21,19 @@ import java.util.List;
 public class History extends AppCompatActivity {
     private List<Mood> mMoodList = new ArrayList<>();
     private String[] bg_color = {"#ffde3c50", "#ff9b9b9b", "#a5468ad9", "#ffb8e986", "#fff9ec4f"};
-    private MoodListHandler mMoodListHandler=new MoodListHandler(this);
+    private MoodListManager mMoodListManager = new MoodListManager(this);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMoodList = mMoodListHandler.getMoodList();
-
-        mMoodList.clear();
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, -7);
-        mMoodList.add(new Mood(0, c, "Seven days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -6);
-        mMoodList.add(new Mood(1, c, "Six days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -5);
-        mMoodList.add(new Mood(2, c, "Five days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -4);
-        mMoodList.add(new Mood(3, c, "Four days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -3);
-        mMoodList.add(new Mood(4, c, "Three days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -2);
-        mMoodList.add(new Mood(3, c, "Two days ago"));
-        c = Calendar.getInstance();
-        c.add(Calendar.DATE, -1);
-        mMoodList.add(new Mood(4, c, "One day ago"));
-
+        mMoodList = mMoodListManager.getMoodList();
         setContentView(R.layout.activity_history);
+        initHistory();
+    }
 
+    private void initHistory() {
         TextView tvOne = findViewById(R.id.first);
         TextView tvTwo = findViewById(R.id.second);
         TextView tvThree = findViewById(R.id.third);
@@ -73,8 +52,10 @@ public class History extends AppCompatActivity {
     }
 
     /**
-     * This method serves to set the background color representing the mood selected for the corresponding
-     * day on the seven TextViews representing the last week.
+     * This method serves to
+     * - set the background color representing the mood selected
+     * -set the width of the text view
+     * -show if there is a comment saved
      *
      * @param daysAgo  refers to how many days have passed since the mood was saved
      * @param textView refers to the corresponding text view where it will be shown
@@ -88,27 +69,29 @@ public class History extends AppCompatActivity {
                 int cMoodMonth = mMoodList.get(i).getDate().get(Calendar.MONTH);
 
                 Calendar c = Calendar.getInstance();
+
                 c.add(Calendar.DATE, daysAgo);
                 int c2Month = c.get(Calendar.MONTH);
                 int c2Day = c.get(Calendar.DAY_OF_MONTH);
 
-                //If dates are matched; Set the background color and comment to the corresponding textview
-
+                //If dates are matched; Set the background color
                 if (cMoodDay == c2Day && cMoodMonth == c2Month) {
 
                     Mood mood = mMoodList.get(i);
                     int mInt = mood.getMood();
-                    int bgColor = Color.parseColor(bg_color[mInt]);
-                    textView.setBackgroundColor(bgColor);
+                    String color = bg_color[mInt];
+                    textView.setBackgroundColor(Color.parseColor(color));
 
+                    //set the width
                     Display display = getWindowManager().getDefaultDisplay();
                     Point size = new Point();
                     display.getSize(size);
                     int width = size.x;
-                    int dividedWidth=width/5;
-                    width=mInt*dividedWidth+dividedWidth;
+                    int dividedWidth = width / 5;
+                    width = mInt * dividedWidth + dividedWidth;
                     textView.setWidth(width);
 
+                    //check if there's a comment and show icon in that case
                     if (mood.getComment().length() > 0) {
                         final String comment = mood.getComment();
                         Drawable image = getResources().getDrawable(R.drawable.ic_comment_black_48px);

@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.controler.MainActivity;
 import com.oc.liza.moodtrackeroc.model.Mood;
@@ -109,7 +110,7 @@ public class SharePopUp extends MainActivity {
 
     }
 
-        private void checkPermission(){
+    private void checkPermission() {
         //check if permission to send sms and if not so, ask for permission
         if (ContextCompat.checkSelfPermission(context,
                 Manifest.permission.SEND_SMS)
@@ -118,7 +119,7 @@ public class SharePopUp extends MainActivity {
             ActivityCompat.requestPermissions((MainActivity) context,
                     new String[]{Manifest.permission.SEND_SMS},
                     MY_PERMISSIONS_REQUEST_SEND_SMS);
-        }else {
+        } else {
             // If permission is already granted send SMS
             sendSMS();
         }

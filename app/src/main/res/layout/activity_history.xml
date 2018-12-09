@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/light_grey">
+    android:background="@color/light_grey"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/first"
@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
         android:text="@string/six_days"
         android:textColor="#000000"
         android:textSize="@dimen/text_size" />
@@ -29,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
         android:text="@string/five_days"
         android:textColor="#000000"
         android:textSize="@dimen/text_size" />
@@ -39,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
         android:text="@string/four_days"
         android:textColor="#000000"
         android:textSize="@dimen/text_size" />
@@ -49,7 +46,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
         android:text="@string/three_days"
         android:textColor="#000000"
         android:textSize="@dimen/text_size" />
@@ -59,7 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/warm_grey"
         android:text="@string/two_days"
         android:textColor="#000000"
         android:textSize="@dimen/text_size" />

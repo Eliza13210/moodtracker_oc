@@ -1,4 +1,5 @@
 package com.oc.liza.moodtrackeroc.controler;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,10 +12,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
-import com.oc.liza.moodtrackeroc.utils.MoodListHandler;
+import com.oc.liza.moodtrackeroc.utils.MoodListManager;
 import com.oc.liza.moodtrackeroc.utils.SharePopUp;
 import com.oc.liza.moodtrackeroc.view.ScreenSlide;
 import com.oc.liza.moodtrackeroc.view.VerticalViewPager;
@@ -26,18 +27,18 @@ public class MainActivity extends AppCompatActivity {
     private VerticalViewPager mViewPager;
     private String mComment = "";
     private Mood mMood;
-    private MoodListHandler mMoodListHandler = new MoodListHandler(this);
+    private MoodListManager mMoodListManager;
     private final Context ctx = this;
-    TextView text;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text = findViewById(R.id.text);
+
         initButtons();
         initSlideScreen();
-
+        mMoodListManager = new MoodListManager(this);
     }
 
     private void initButtons() {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 int currentItem = mViewPager.getCurrentItem();
                 Calendar date = Calendar.getInstance();
                 mMood = new Mood(currentItem, date, mComment);
-                mMoodListHandler.checkDate(mMood);
+                mMoodListManager.addMood(mMood);
                 SharePopUp mSharePopUp = new SharePopUp(ctx, mMood);
 
             }
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Put the happy smiley as first image when app is launched
         mViewPager.setCurrentItem(3);
-
     }
 
     //Comment pop up dialog
@@ -104,8 +104,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 mComment = input.getText().toString();
-                mMood = new Mood(mViewPager.getCurrentItem(), Calendar.getInstance(), mComment);
-                mMoodListHandler.checkDate(mMood);
+                Calendar c = Calendar.getInstance();
+
+                mMood = new Mood(mViewPager.getCurrentItem(), c, mComment);
+                mMoodListManager.addMood(mMood);
+                mComment = "";
                 dialog.dismiss();
             }
         });
