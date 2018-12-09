@@ -21,6 +21,7 @@ import com.oc.liza.moodtrackeroc.view.ScreenSlide;
 import com.oc.liza.moodtrackeroc.view.VerticalViewPager;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         dialog.show();
     }
