@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="colorArray">
-        <item>#ffde3c50</item>
-        <item>#ff9b9b9b</item>
-        <item>#a5468ad9</item>
-        <item>#ffb8e986</item>
-        <item>#fff9ec4f</item>
-    </array>
+    <string-array name="colorArray">
+        <item>"#ffde3c50"</item>
+        <item>"#ff9b9b9b"</item>
+        <item>"#a5468ad9"</item>
+        <item>"#ffb8e986"</item>
+        <item>"#fff9ec4f"</item>
+    </string-array>
+
+    <integer-array name="smileys">
+        <item>@drawable/smiley_sad</item>
+        <item>@drawable/smiley_disappointed</item>
+        <item>@drawable/smiley_normal</item>
+        <item>@drawable/smiley_happy</item>
+        <item>@drawable/smiley_super_happy</item>
+    </integer-array>
 
 
 </resources>

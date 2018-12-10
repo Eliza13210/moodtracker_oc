@@ -20,7 +20,7 @@ import java.util.List;
 
 public class History extends AppCompatActivity {
     private List<Mood> mMoodList = new ArrayList<>();
-    private String[] bg_color = {"#ffde3c50", "#ff9b9b9b", "#a5468ad9", "#ffb8e986", "#fff9ec4f"};
+    private String[] bg_color;
     private MoodListManager mMoodListManager = new MoodListManager(this);
 
 
@@ -29,6 +29,7 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mMoodList = mMoodListManager.getMoodList();
+        bg_color = getResources().getStringArray(R.array.colorArray);
         setContentView(R.layout.activity_history);
         initHistory();
     }
@@ -48,7 +49,7 @@ public class History extends AppCompatActivity {
         moodWeek(-4, tvFour);
         moodWeek(-3, tvFive);
         moodWeek(-2, tvSix);
-        moodWeek(-1, tvSeven);
+        moodWeek(0, tvSeven);
     }
 
     /**

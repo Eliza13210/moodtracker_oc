@@ -2,6 +2,8 @@ package com.oc.liza.moodtrackeroc;
 
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 /**
@@ -19,7 +21,6 @@ public class ExampleUnitTest {
 
     public class testDate {
         /**
-         mMoodList.clear();
          Calendar c = Calendar.getInstance();
          c.add(Calendar.DATE, -7);
          mMoodList.add(new Mood(0, c, "Seven days ago"));

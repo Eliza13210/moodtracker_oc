@@ -20,7 +20,6 @@ import java.util.List;
 
 public class MoodListManager {
     private List<Mood> moodList = new ArrayList<>();
-    private File file;
     private final static String filename = "moodsList.txt";
     private Context context;
 

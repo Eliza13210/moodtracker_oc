@@ -9,22 +9,21 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.oc.liza.moodtrackeroc.R;
-import com.oc.liza.moodtrackeroc.controler.MainActivity;
 import com.oc.liza.moodtrackeroc.model.Mood;
 
 import java.util.Calendar;
 import java.util.Objects;
 
-public class CommentPopUp extends MainActivity {
+public class CommentPopUp {
 
     private Context context;
     private int mood;
     private MoodListManager manager;
 
-    public CommentPopUp(Context context, int mood){
-        this.context=context;
-        this.mood=mood;
-        manager=new MoodListManager(context);
+    public CommentPopUp(Context context, int mood) {
+        this.context = context;
+        this.mood = mood;
+        manager = new MoodListManager(context);
         commentPopUp();
     }
 
@@ -47,7 +46,7 @@ public class CommentPopUp extends MainActivity {
 
                 Mood mMood = new Mood(mood, c, mComment);
                 manager.addMood(mMood);
-                //mComment = "";
+
                 dialog.dismiss();
             }
         });

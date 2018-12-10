@@ -2,6 +2,7 @@ package com.oc.liza.moodtrackeroc.view;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 
@@ -13,16 +14,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.oc.liza.moodtrackeroc.R;
+import com.oc.liza.moodtrackeroc.controler.MainActivity;
 
 public class ScreenSlide extends PagerAdapter {
 
     private int[] img_resources = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
-    private String[] bg_color = {"#ffde3c50", "#ff9b9b9b", "#a5468ad9", "#ffb8e986", "#fff9ec4f"};
+    private String[] bg_color;
     private Context ctx;
 
 
     public ScreenSlide(Context ctx) {
         this.ctx = ctx;
+        bg_color = ctx.getResources().getStringArray(R.array.colorArray);
     }
 
     @Override

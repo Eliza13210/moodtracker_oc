@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.controler.MainActivity;
 import com.oc.liza.moodtrackeroc.model.Mood;
+
+import java.util.Objects;
 
 public class SharePopUp extends MainActivity {
 
@@ -84,7 +87,7 @@ public class SharePopUp extends MainActivity {
             }
         });
         AlertDialog dialog = buildShare.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         dialog.show();
     }
 
@@ -127,7 +130,7 @@ public class SharePopUp extends MainActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 // permission was granted
