@@ -14,25 +14,30 @@ import com.oc.liza.moodtrackeroc.utils.CommentPopUp;
 import com.oc.liza.moodtrackeroc.utils.MoodListManager;
 import com.oc.liza.moodtrackeroc.utils.SharePopUp;
 import com.oc.liza.moodtrackeroc.view.ScreenSlide;
-import com.oc.liza.moodtrackeroc.view.VerticalViewPager;
 
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private VerticalViewPager mViewPager;
-    private String mComment = "";
     private Mood mMood;
     private MoodListManager mMoodListManager;
     private final Context ctx = this;
-    private Calendar c;
+
+    @BindView(R.id.historyButton)
+    ImageButton historyBtn;
+    @BindView(R.id.pager)
+    ViewPager mViewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         this.getResources().getStringArray(R.array.colorArray);
         initButtons();
         initSlideScreen();
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Button to access history
-        ImageButton historyBtn = findViewById(R.id.historyButton);
         historyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSlideScreen() {
         // Set slide up and down function
-        mViewPager = findViewById(R.id.pager);
+
         ScreenSlide adapter = new ScreenSlide(this);
         mViewPager.setAdapter(adapter);
 
@@ -107,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createMood() {
-        c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         int mood = mViewPager.getCurrentItem();
-        Mood m = new Mood(mood, c, mComment);
+        Mood m = new Mood(mood, c, null);
         mMoodListManager.addMood(m);
     }
 

@@ -18,10 +18,30 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class History extends AppCompatActivity {
+
     private List<Mood> mMoodList = new ArrayList<>();
     private String[] bg_color;
     private MoodListManager mMoodListManager = new MoodListManager(this);
+
+    // 1 - Adding @BindView in order to indicate to ButterKnife to get & serialise it
+    @BindView(R.id.first)
+    TextView tvOne;
+    @BindView(R.id.second)
+    TextView tvTwo;
+    @BindView(R.id.third)
+    TextView tvThree;
+    @BindView(R.id.fourth)
+    TextView tvFour;
+    @BindView(R.id.fifth)
+    TextView tvFive;
+    @BindView(R.id.sixt)
+    TextView tvSix;
+    @BindView(R.id.seventh)
+    TextView tvSeven;
 
 
     @Override
@@ -31,17 +51,11 @@ public class History extends AppCompatActivity {
         mMoodList = mMoodListManager.getMoodList();
         bg_color = getResources().getStringArray(R.array.colorArray);
         setContentView(R.layout.activity_history);
+        ButterKnife.bind(this);
         initHistory();
     }
 
     private void initHistory() {
-        TextView tvOne = findViewById(R.id.first);
-        TextView tvTwo = findViewById(R.id.second);
-        TextView tvThree = findViewById(R.id.third);
-        TextView tvFour = findViewById(R.id.fourth);
-        TextView tvFive = findViewById(R.id.fifth);
-        TextView tvSix = findViewById(R.id.sixt);
-        TextView tvSeven = findViewById(R.id.seventh);
 
         moodWeek(-7, tvOne);
         moodWeek(-6, tvTwo);
@@ -49,7 +63,7 @@ public class History extends AppCompatActivity {
         moodWeek(-4, tvFour);
         moodWeek(-3, tvFive);
         moodWeek(-2, tvSix);
-        moodWeek(0, tvSeven);
+        moodWeek(-1, tvSeven);
     }
 
     /**
@@ -110,8 +124,7 @@ public class History extends AppCompatActivity {
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-            String str = "Aucun humeur sauvgardé pour ce jour";
-            textView.setText(str);
+            textView.setText("Erreur: " + e);
         }
     }
 

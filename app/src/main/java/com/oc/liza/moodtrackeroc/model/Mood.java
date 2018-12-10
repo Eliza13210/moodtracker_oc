@@ -44,7 +44,7 @@ public class Mood implements Serializable {
         } else {
             firstLine = "Bonjour ";
         }
-        String str = firstLine + " Aujourd'hui, je suis de" + moods[mood] + " : " + comment;
+        String str = firstLine + " Aujourd'hui, je suis de" + moods[mood] + " . " + comment;
 
         return str;
 
