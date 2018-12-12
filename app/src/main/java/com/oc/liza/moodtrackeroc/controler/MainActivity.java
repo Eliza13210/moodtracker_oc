@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     ImageButton historyBtn;
     @BindView(R.id.pager)
     ViewPager mViewPager;
+    @BindView(R.id.commentButton)
+    ImageButton commentBtn;
+    @BindView(R.id.shareButton)
+    ImageButton shareBtn;
 
 
     @Override
@@ -46,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
         this.getResources().getStringArray(R.array.colorArray);
         initButtons();
         initSlideScreen();
-        mMoodListManager = new MoodListManager(this);
     }
 
     private void initButtons() {
+        mMoodListManager = new MoodListManager(this);
 
         //Button to add a comment
-        ImageButton commentBtn = findViewById(R.id.commentButton);
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Button to share your mood by SMS
-        ImageButton shareBtn = findViewById(R.id.shareButton);
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

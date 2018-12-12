@@ -26,6 +26,8 @@ public class History extends AppCompatActivity {
     private List<Mood> mMoodList = new ArrayList<>();
     private String[] bg_color;
     private MoodListManager mMoodListManager = new MoodListManager(this);
+    private int cMonth;
+    private int cDay;
 
     // 1 - Adding @BindView in order to indicate to ButterKnife to get & serialise it
     @BindView(R.id.first)
@@ -57,75 +59,115 @@ public class History extends AppCompatActivity {
 
     private void initHistory() {
 
-        moodWeek(-7, tvOne);
-        moodWeek(-6, tvTwo);
-        moodWeek(-5, tvThree);
-        moodWeek(-4, tvFour);
-        moodWeek(-3, tvFive);
-        moodWeek(-2, tvSix);
-        moodWeek(-1, tvSeven);
+        TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};
+        int j = -7;
+        for (int i = 0; i < textviewList.length; i++) {
+            moodWeek(j, textviewList[i]);
+            j++;
+        }
     }
 
     /**
-     * This method serves to
-     * - set the background color representing the mood selected
-     * -set the width of the text view
-     * -show if there is a comment saved
+     * This method serves to place the mood on the correct textview, depending on how many days ago the mood was saved
      *
      * @param daysAgo  refers to how many days have passed since the mood was saved
      * @param textView refers to the corresponding text view where it will be shown
      */
 
     private void moodWeek(int daysAgo, TextView textView) {
-        try {
-            //Compare the mood date to the text view's date
-            for (int i = 0; i < mMoodList.size(); i++) {
-                int cMoodDay = mMoodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
-                int cMoodMonth = mMoodList.get(i).getDate().get(Calendar.MONTH);
 
-                Calendar c = Calendar.getInstance();
+        //Compare the mood date to the text view's date
+        for (int i = 0; i < mMoodList.size(); i++) {
+            int cMoodDay = mMoodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
+            int cMoodMonth = mMoodList.get(i).getDate().get(Calendar.MONTH);
 
-                c.add(Calendar.DATE, daysAgo);
-                int c2Month = c.get(Calendar.MONTH);
-                int c2Day = c.get(Calendar.DAY_OF_MONTH);
+            //get todays date
+            getDate(daysAgo);
 
-                //If dates are matched; Set the background color
-                if (cMoodDay == c2Day && cMoodMonth == c2Month) {
+            //If dates are matched; Set the background color
+            if (cMoodDay == cDay && cMoodMonth == cMonth) {
 
-                    Mood mood = mMoodList.get(i);
-                    int mInt = mood.getMood();
-                    String color = bg_color[mInt];
-                    textView.setBackgroundColor(Color.parseColor(color));
+                Mood mood = mMoodList.get(i);
+                int mInt = mood.getMood();
 
-                    //set the width
-                    Display display = getWindowManager().getDefaultDisplay();
-                    Point size = new Point();
-                    display.getSize(size);
-                    int width = size.x;
-                    int dividedWidth = width / 5;
-                    width = mInt * dividedWidth + dividedWidth;
-                    textView.setWidth(width);
+                setColor(textView, mInt);
+                setWidth(textView, mInt);
 
-                    //check if there's a comment and show icon in that case
-                    if (mood.getComment().length() > 0) {
-                        final String comment = mood.getComment();
-                        Drawable image = getResources().getDrawable(R.drawable.ic_comment_black_48px);
-                        int h = image.getIntrinsicHeight();
-                        int w = image.getIntrinsicWidth();
-                        image.setBounds(0, 0, h, w);
-                        textView.setCompoundDrawables(null, null, image, null);
-                        textView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View textView) {
-                                Toast.makeText(getApplicationContext(), comment, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+                //check if there's a comment and show icon in that case
+                if (mood.getComment().length() > 0) {
+                    setComment(mood, textView);
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
-            textView.setText("Erreur: " + e);
         }
+
+    }
+
+    /**
+     * Get the date for each day of the week
+     *
+     * @param daysAgo refers to how many days ago from todays date
+     */
+    private void getDate(int daysAgo) {
+        Calendar c = Calendar.getInstance();
+
+        c.add(Calendar.DATE, daysAgo);
+        cMonth = c.get(Calendar.MONTH);
+        cDay = c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * Set textview background color depending on which mood is selected
+     *
+     * @param textView refers to the textview you want to change background color for
+     * @param mInt     refers to the mood identified by a number and will be used to pick the right color from the array
+     */
+
+    private void setColor(TextView textView, int mInt) {
+
+        String color = bg_color[mInt];
+        textView.setBackgroundColor(Color.parseColor(color));
+    }
+
+    /**
+     * Set textview width depending on which mood
+     *
+     * @param textView the textview you want to change
+     * @param mInt     the mood identified by a number
+     */
+
+    private void setWidth(TextView textView, int mInt) {
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int dividedWidth = width / 5;
+        width = mInt * dividedWidth + dividedWidth;
+        textView.setWidth(width);
+
+    }
+
+    /**
+     * Set comment image in the textview
+     *
+     * @param mood     refers to the object mood that holds the comment
+     * @param textView refers to the textview you want to change
+     */
+    private void setComment(Mood mood, TextView textView) {
+        final String comment = mood.getComment();
+        Drawable image = getResources().getDrawable(R.drawable.ic_comment_black_48px);
+        int h = image.getIntrinsicHeight();
+        int w = image.getIntrinsicWidth();
+        image.setBounds(0, 0, h, w);
+        textView.setCompoundDrawables(null, null, image, null);
+
+        //make image clickable and show the comment
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View textView) {
+                Toast.makeText(getApplicationContext(), comment, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
