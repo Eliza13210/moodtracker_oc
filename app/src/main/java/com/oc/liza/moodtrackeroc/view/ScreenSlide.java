@@ -38,6 +38,13 @@ public class ScreenSlide extends PagerAdapter {
         return (view == o);
     }
 
+    /**
+     * Is called to update the image and background color depending of the position
+     *
+     * @param container is the view group holding the different views
+     * @param position  is changed every time the user slide the screen up or down
+     * @return
+     */
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
