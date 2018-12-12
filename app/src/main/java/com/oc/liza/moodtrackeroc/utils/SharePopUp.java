@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +23,7 @@ import com.oc.liza.moodtrackeroc.model.Mood;
 
 import java.util.Objects;
 
-public class SharePopUp extends MainActivity {
+public class SharePopUp {
 
     private Context context;
     private String number = "";
@@ -110,7 +109,10 @@ public class SharePopUp extends MainActivity {
             Toast.makeText(context, "Le message n'a pas été envoyé ", Toast.LENGTH_SHORT).show();
         }
 
+    }
 
+    public void permissionGranted() {
+        sendSMS();
     }
 
     private void checkPermission() {
@@ -126,24 +128,6 @@ public class SharePopUp extends MainActivity {
             // If permission is already granted send SMS
             sendSMS();
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                // permission was granted
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    sendSMS();
-                }
-                // permission denied
-                Toast.makeText(context, "Vous n'avez pas autorisé l'application d'envoyer des SMS", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-
     }
 
 

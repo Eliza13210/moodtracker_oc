@@ -1,7 +1,6 @@
 package com.oc.liza.moodtrackeroc.utils;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.model.Mood;
 
@@ -109,7 +108,6 @@ public class MoodListManager {
             oos.writeObject(moodList);
             oos.close();
             outputStream.close();
-            Toast.makeText(context, "Votre humeur du jour a été sauvegardée!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             System.err.println("Votre humeur du jour n'a pas pu être sauvegardée!" + e);
         }

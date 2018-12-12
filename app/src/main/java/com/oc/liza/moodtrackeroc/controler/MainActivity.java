@@ -2,11 +2,14 @@ package com.oc.liza.moodtrackeroc.controler;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.oc.liza.moodtrackeroc.R;
 import com.oc.liza.moodtrackeroc.model.Mood;
@@ -23,9 +26,11 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private Mood mMood;
     private MoodListManager mMoodListManager;
     private final Context ctx = this;
+    private SharePopUp mSharePopUp;
 
     @BindView(R.id.historyButton)
     ImageButton historyBtn;
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Mood> moods = mMoodListManager.getMoodList();
                 mMood = moods.get(moods.size() - 1);
-                new SharePopUp(ctx, mMood);
+                mSharePopUp = new SharePopUp(ctx, mMood);
 
             }
         });
@@ -94,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -104,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
 
@@ -113,10 +116,25 @@ public class MainActivity extends AppCompatActivity {
     private void createMood() {
         Calendar c = Calendar.getInstance();
         int mood = mViewPager.getCurrentItem();
-        Mood m = new Mood(mood, c, null);
-        mMoodListManager.addMood(m);
+        mMood = new Mood(mood, c, null);
+        mMoodListManager.addMood(mMood);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                // permission was granted
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mSharePopUp.permissionGranted();
+                }
+                // permission denied
+                Toast.makeText(this, "Vous n'avez pas autorisé l'application d'envoyer des SMS", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
 
 
