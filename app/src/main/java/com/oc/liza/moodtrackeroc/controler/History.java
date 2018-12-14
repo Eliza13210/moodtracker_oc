@@ -94,7 +94,7 @@ public class History extends AppCompatActivity {
                 setWidth(textView, mInt);
 
                 //check if there's a comment and show icon in that case
-                if (mood.getComment().length() > 0) {
+                if (mood.getComment()!=null) {
                     setComment(mood, textView);
                 }
             }
