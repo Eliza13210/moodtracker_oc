@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrolled(int i, float v, int i1) {
             }
 
+            //when page has changed, save mood
             @Override
             public void onPageSelected(int i) {
                 createMood();

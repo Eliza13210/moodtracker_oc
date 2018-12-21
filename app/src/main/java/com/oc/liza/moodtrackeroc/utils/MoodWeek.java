@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class MoodWeek {
     private int cMonth;
     private int cDay;
     private Context ctx;
+    private int width;
 
     public MoodWeek(List<Mood> moodList, Context ctx) {
         this.moodList = moodList;
@@ -31,7 +33,7 @@ public class MoodWeek {
     }
 
     /**
-     * This method serves to place the mood on the correct textview, depending on how many days ago the mood was saved
+     * This method serves to associate the mood on the correct textview, depending on how many days ago the mood was saved
      *
      * @param daysAgo  refers to how many days have passed since the mood was saved
      * @param textView refers to the corresponding text view where it will be shown
@@ -39,7 +41,7 @@ public class MoodWeek {
 
     public void matchDates(int daysAgo, TextView textView) {
 
-        //Compare the mood date to the text view's date
+        //Get the mood date
         for (int i = 0; i < moodList.size(); i++) {
             int cMoodDay = moodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
             int cMoodMonth = moodList.get(i).getDate().get(Calendar.MONTH);
@@ -47,12 +49,13 @@ public class MoodWeek {
             //get todays date
             getDate(daysAgo);
 
-            //If dates are matched; Set the background color
+            //If dates are matched...
             if (cMoodDay == cDay && cMoodMonth == cMonth) {
 
                 Mood mood = moodList.get(i);
                 int mInt = mood.getMood();
 
+                //...set the background color and width of the textview
                 setColor(textView, mInt);
                 setWidth(textView, mInt);
 
@@ -66,7 +69,7 @@ public class MoodWeek {
     }
 
     /**
-     * Get the date for each day of the week
+     * Get the date for each day of the last week
      *
      * @param daysAgo refers to how many days ago from todays date
      */
@@ -103,10 +106,10 @@ public class MoodWeek {
         Display display = ((Activity) ctx).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x;
+        width = size.x;
         int dividedWidth = width / 5;
-        width = mInt * dividedWidth + dividedWidth;
-        textView.setWidth(width);
+        dividedWidth = mInt * dividedWidth + dividedWidth;
+        textView.setWidth(dividedWidth);
 
     }
 
@@ -120,9 +123,11 @@ public class MoodWeek {
         final String comment = mood.getComment();
         Drawable image = ctx.getResources().getDrawable(R.drawable.ic_comment_black_48px);
         int h = image.getIntrinsicHeight();
-        int w = image.getIntrinsicWidth();
-        image.setBounds(0, 0, h, w);
+        int w = image.getIntrinsicWidth() + 10;
+        image.setBounds(-5, 0, h, w);
         textView.setCompoundDrawables(null, null, image, null);
+
+        textView.setCompoundDrawablePadding(10);
 
         //make image clickable and show the comment
         textView.setOnClickListener(new View.OnClickListener() {

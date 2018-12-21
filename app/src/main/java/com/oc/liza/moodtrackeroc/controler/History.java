@@ -22,8 +22,6 @@ public class History extends AppCompatActivity {
     private Context ctx = this;
     private MoodListManager mMoodListManager = new MoodListManager(this);
 
-
-    // 1 - Adding @BindView in order to indicate to ButterKnife to get & serialise it
     @BindView(R.id.first)
     TextView tvOne;
     @BindView(R.id.second)
@@ -50,10 +48,13 @@ public class History extends AppCompatActivity {
         initHistory();
     }
 
+
     private void initHistory() {
         MoodWeek moodWeek = new MoodWeek(mMoodList, ctx);
         TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};
         int j = -7;
+
+        // The matchDates method will be called upon for the 7 days of the last week in order to associate every day with a textview
         for (int i = 0; i < textviewList.length; i++) {
             moodWeek.matchDates(j, textviewList[i]);
             j++;
