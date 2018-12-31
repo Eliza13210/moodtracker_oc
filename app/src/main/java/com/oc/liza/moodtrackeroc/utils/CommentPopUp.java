@@ -24,11 +24,11 @@ public class CommentPopUp {
         this.context = context;
         this.mood = mood;
         manager = new MoodListManager(context);
-        commentPopUp();
+        popUpDialog();
     }
 
     //Comment pop up dialog
-    public void commentPopUp() {
+    private void popUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         final EditText input = new EditText(context);
         builder.setTitle("Commentaire");

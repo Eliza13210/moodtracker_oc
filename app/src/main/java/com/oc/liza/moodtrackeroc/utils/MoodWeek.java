@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,11 +52,11 @@ public class MoodWeek {
             if (cMoodDay == cDay && cMoodMonth == cMonth) {
 
                 Mood mood = moodList.get(i);
-                int mInt = mood.getMood();
+                int moodInt = mood.getMood();
 
                 //...set the background color and width of the textview
-                setColor(textView, mInt);
-                setWidth(textView, mInt);
+                setColor(textView, moodInt);
+                setWidth(textView, moodInt);
 
                 //check if there's a comment and show icon in that case
                 if (mood.getComment() != null) {
@@ -98,17 +97,17 @@ public class MoodWeek {
      * Set textview width depending on which mood
      *
      * @param textView the textview you want to change
-     * @param mInt     the mood identified by a number
+     * @param moodInt     the mood identified by a number
      */
 
-    private void setWidth(TextView textView, int mInt) {
+    private void setWidth(TextView textView, int moodInt) {
 
         Display display = ((Activity) ctx).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         width = size.x;
         int dividedWidth = width / 5;
-        dividedWidth = mInt * dividedWidth + dividedWidth;
+        dividedWidth = moodInt * dividedWidth + dividedWidth;
         textView.setWidth(dividedWidth);
 
     }

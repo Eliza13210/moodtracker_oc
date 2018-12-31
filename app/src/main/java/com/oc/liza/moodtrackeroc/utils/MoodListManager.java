@@ -27,6 +27,7 @@ public class MoodListManager {
 
     }
 
+    //Return the saved mood list
     public List<Mood> getMoodList() {
         readFile();
         return moodList;
@@ -52,7 +53,7 @@ public class MoodListManager {
 
     }
 
-    //add new mood
+    //Add new mood
     public void addMood(Mood mood) {
         readFile();
         checkDate(mood);

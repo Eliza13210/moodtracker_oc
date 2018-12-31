@@ -35,11 +35,11 @@ public class SharePopUp {
     public SharePopUp(Context context, Mood mood) {
         this.context = context;
         this.mood = mood;
-        sharePopUp();
+        popUpDialog();
     }
 
     //Share mood by sms or e-mail
-    private void sharePopUp() {
+    private void popUpDialog() {
 
         AlertDialog.Builder buildShare = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         buildShare.setTitle("Choissisez votre mode de partage");
