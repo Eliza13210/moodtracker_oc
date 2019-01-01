@@ -54,7 +54,7 @@ public class History extends AppCompatActivity {
         TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};
         int j = -7;
 
-        // The matchDates method will be called upon for the 7 days of the last week in order to associate every day with a textview
+        // The matchDates method will be called upon for the last 7 days in order to associate every day with a textview
         for (int i = 0; i < textviewList.length; i++) {
             moodWeek.matchDates(j, textviewList[i]);
             j++;

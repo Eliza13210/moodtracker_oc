@@ -41,11 +41,13 @@ public class SharePopUp {
     //Share mood by sms or e-mail
     private void popUpDialog() {
 
+
         AlertDialog.Builder buildShare = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         buildShare.setTitle("Choissisez votre mode de partage");
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
 
+        //Create text fields
         final EditText inputShare = new EditText(context);
         inputShare.setTextColor(Color.DKGRAY);
         inputShare.setHintTextColor(Color.LTGRAY);
@@ -116,6 +118,7 @@ public class SharePopUp {
     }
 
     private void checkPermission() {
+
         //check if permission to send sms and if not so, ask for permission
         if (ContextCompat.checkSelfPermission(context,
                 Manifest.permission.SEND_SMS)

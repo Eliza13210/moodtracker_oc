@@ -30,6 +30,8 @@ public class CommentPopUp {
     //Comment pop up dialog
     private void popUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
+
+        //Create a text field
         final EditText input = new EditText(context);
         builder.setTitle("Commentaire");
         input.setTextColor(Color.BLACK);
@@ -41,6 +43,8 @@ public class CommentPopUp {
         builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
+
+                //When user validate; create a mood and save it
                 String mComment = input.getText().toString();
                 Calendar c = Calendar.getInstance();
 

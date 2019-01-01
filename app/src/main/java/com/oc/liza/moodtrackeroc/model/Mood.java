@@ -7,7 +7,6 @@ import java.util.Calendar;
 
 public class Mood implements Serializable {
 
-    //mood number check with list in screenslide
     private int mood;
     private Calendar date;
     private String comment;

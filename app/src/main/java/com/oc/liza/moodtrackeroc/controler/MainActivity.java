@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private void initButtons() {
         mMoodListManager = new MoodListManager(this);
 
-        //Button to add a comment
+         // Button to add a comment
+
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Button to share your mood by SMS
+
+         // Button to share your mood by SMS or e-mail
+
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,13 +80,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Button to access history
+
+         // Button to access history
+
         historyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent history = new Intent(MainActivity.this, History.class);
-                startActivity(history);
+                startActivity(new Intent(MainActivity.this, History.class));
             }
         });
 
@@ -116,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Create a new mood and save it in the mood list
+     */
     private void createMood() {
         Calendar c = Calendar.getInstance();
         int mood = mViewPager.getCurrentItem();
