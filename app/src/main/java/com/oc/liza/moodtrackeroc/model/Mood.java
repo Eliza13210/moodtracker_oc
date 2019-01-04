@@ -30,12 +30,15 @@ public class Mood implements Serializable {
         return date;
     }
 
-
     public String getComment() {
         return comment;
     }
 
-
+    /**
+     * This function is used when the user shares his mood by SMS or e-mail
+     *
+     * @return it returns a string with the mood and a comment if there is one
+     */
     public String toString() {
         String firstLine;
         if (mood < 2) firstLine = "Fais attention! ";
@@ -45,10 +48,6 @@ public class Mood implements Serializable {
             firstLine = "Bonjour ";
         }
         String str = firstLine + " Aujourd'hui, je suis de" + moods[mood] + " . " + comment;
-
         return str;
-
     }
-
-
 }

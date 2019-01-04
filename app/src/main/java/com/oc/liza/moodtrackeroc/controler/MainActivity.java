@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        this.getResources().getStringArray(R.array.colorArray);
         initButtons();
         initSlideScreen();
     }
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private void initButtons() {
         mMoodListManager = new MoodListManager(this);
 
-         // Button to add a comment
+        // Button to add a comment
 
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-         // Button to share your mood by SMS or e-mail
+        // Button to share your mood by SMS or e-mail
 
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-         // Button to access history
+        // Button to access history
 
         historyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         mMoodListManager.addMood(mMood);
     }
 
+    /**
+     * Ask for permission to send SMS
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {

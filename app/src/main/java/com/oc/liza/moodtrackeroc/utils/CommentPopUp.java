@@ -27,7 +27,9 @@ public class CommentPopUp {
         popUpDialog();
     }
 
-    //Comment pop up dialog
+    /**
+     * This is the comment popup dialog where the used can write a comment to the mood that is selected on the screen
+     */
     private void popUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
 

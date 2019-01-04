@@ -24,7 +24,6 @@ public class MoodListManager {
 
     public MoodListManager(Context context) {
         this.context = context;
-
     }
 
     //Return the saved mood list
@@ -50,7 +49,6 @@ public class MoodListManager {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     //Add new mood

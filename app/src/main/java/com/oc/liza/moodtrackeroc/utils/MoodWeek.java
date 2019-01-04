@@ -23,7 +23,6 @@ public class MoodWeek {
     private int cMonth;
     private int cDay;
     private Context ctx;
-    private int width;
 
     public MoodWeek(List<Mood> moodList, Context ctx) {
         this.moodList = moodList;
@@ -32,7 +31,7 @@ public class MoodWeek {
     }
 
     /**
-     * This method serves to associate the mood on the correct textview, depending on how many days ago the mood was saved
+     * This method serves to associate the mood with the correct textview, depending on how many days ago the mood was saved
      *
      * @param daysAgo  refers to how many days have passed since the mood was saved
      * @param textView refers to the corresponding text view where it will be shown
@@ -40,17 +39,18 @@ public class MoodWeek {
 
     public void matchDates(int daysAgo, TextView textView) {
 
-        //Get the mood date
+        //Get the mood's date
         for (int i = 0; i < moodList.size(); i++) {
             int cMoodDay = moodList.get(i).getDate().get(Calendar.DAY_OF_MONTH);
             int cMoodMonth = moodList.get(i).getDate().get(Calendar.MONTH);
 
-            //get todays date
+            //get the date days ago
             getDate(daysAgo);
 
             //If dates are matched...
             if (cMoodDay == cDay && cMoodMonth == cMonth) {
 
+                //...get the mood
                 Mood mood = moodList.get(i);
                 int moodInt = mood.getMood();
 
@@ -64,13 +64,12 @@ public class MoodWeek {
                 }
             }
         }
-
     }
 
     /**
-     * Get the date for each day of the last week
+     * Get the date
      *
-     * @param daysAgo refers to how many days ago from todays date
+     * @param daysAgo refers to how many days ago from today's date
      */
     private void getDate(int daysAgo) {
         Calendar c = Calendar.getInstance();
@@ -97,7 +96,7 @@ public class MoodWeek {
      * Set textview width depending on which mood
      *
      * @param textView the textview you want to change
-     * @param moodInt     the mood identified by a number
+     * @param moodInt  the mood identified by a number
      */
 
     private void setWidth(TextView textView, int moodInt) {
@@ -105,11 +104,10 @@ public class MoodWeek {
         Display display = ((Activity) ctx).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        width = size.x;
+        int width = size.x;
         int dividedWidth = width / 5;
         dividedWidth = moodInt * dividedWidth + dividedWidth;
         textView.setWidth(dividedWidth);
-
     }
 
     /**

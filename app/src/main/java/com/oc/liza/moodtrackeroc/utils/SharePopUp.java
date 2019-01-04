@@ -38,9 +38,10 @@ public class SharePopUp {
         popUpDialog();
     }
 
-    //Share mood by sms or e-mail
+    /**
+     * This is the popup dialog that let the user share mood by sms or e-mail
+     */
     private void popUpDialog() {
-
 
         AlertDialog.Builder buildShare = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         buildShare.setTitle("Choissisez votre mode de partage");
@@ -100,7 +101,6 @@ public class SharePopUp {
         Uri uri = Uri.parse(uriText);
         send.setData(uri);
         context.startActivity(Intent.createChooser(send, "Send mail"));
-
     }
 
     private void sendSMS() {
@@ -110,7 +110,6 @@ public class SharePopUp {
         } catch (Exception e) {
             Toast.makeText(context, "Le message n'a pas été envoyé ", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void permissionGranted() {
@@ -132,6 +131,4 @@ public class SharePopUp {
             sendSMS();
         }
     }
-
-
 }

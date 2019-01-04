@@ -2,7 +2,6 @@ package com.oc.liza.moodtrackeroc.view;
 
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.oc.liza.moodtrackeroc.R;
-import com.oc.liza.moodtrackeroc.controler.MainActivity;
 
 public class ScreenSlide extends PagerAdapter {
 
@@ -39,9 +37,9 @@ public class ScreenSlide extends PagerAdapter {
     }
 
     /**
-     * Is called to update the image and background color depending of the position
+     * Is called to update the image and background color depending on the position
      *
-     * @param container is the view group holding the different views
+     * @param container is the view group
      * @param position  is changed every time the user slide the screen up or down
      * @return
      */

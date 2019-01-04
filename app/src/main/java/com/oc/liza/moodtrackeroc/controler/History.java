@@ -41,8 +41,6 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mMoodList = mMoodListManager.getMoodList();
         setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
         initHistory();
@@ -50,17 +48,22 @@ public class History extends AppCompatActivity {
 
 
     private void initHistory() {
-        MoodWeek moodWeek = new MoodWeek(mMoodList, ctx);
-        TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};
-        int j = -7;
 
-        // The matchDates method will be called upon for the last 7 days in order to associate every day with a textview
+        //Get the saved mood list
+        mMoodList = mMoodListManager.getMoodList();
+        MoodWeek moodWeek = new MoodWeek(mMoodList, ctx);
+
+        //Make a list of the textviews you want to use
+        TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};
+
+        //start 7 days ago
+        int daysAgo = -7;
+
+        // The matchDates method will be called upon for the 7 days in order to associate every day with a textview
         for (int i = 0; i < textviewList.length; i++) {
-            moodWeek.matchDates(j, textviewList[i]);
-            j++;
+            moodWeek.matchDates(daysAgo, textviewList[i]);
+            daysAgo++;
         }
     }
-
-
 }
 
