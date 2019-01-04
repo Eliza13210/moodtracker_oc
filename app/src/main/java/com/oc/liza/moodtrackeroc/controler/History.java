@@ -10,7 +10,6 @@ import com.oc.liza.moodtrackeroc.model.Mood;
 import com.oc.liza.moodtrackeroc.utils.MoodListManager;
 import com.oc.liza.moodtrackeroc.utils.MoodWeek;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +17,6 @@ import butterknife.ButterKnife;
 
 public class History extends AppCompatActivity {
 
-    private List<Mood> mMoodList = new ArrayList<>();
     private Context ctx = this;
     private MoodListManager mMoodListManager = new MoodListManager(this);
 
@@ -50,8 +48,8 @@ public class History extends AppCompatActivity {
     private void initHistory() {
 
         //Get the saved mood list
-        mMoodList = mMoodListManager.getMoodList();
-        MoodWeek moodWeek = new MoodWeek(mMoodList, ctx);
+        List<Mood> moodList = mMoodListManager.getMoodList();
+        MoodWeek moodWeek = new MoodWeek(moodList, ctx);
 
         //Make a list of the textviews you want to use
         TextView[] textviewList = {tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven};

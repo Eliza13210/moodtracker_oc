@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.oc.liza.moodtrackeroc.controler.MainActivity">
 
-    <!-- screen_slide.xml -->
+    <!-- slide__screen.xml -->
     <com.oc.liza.moodtrackeroc.view.VerticalViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"

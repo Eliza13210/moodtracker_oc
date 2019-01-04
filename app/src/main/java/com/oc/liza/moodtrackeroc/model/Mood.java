@@ -1,9 +1,7 @@
 package com.oc.liza.moodtrackeroc.model;
 
-
 import java.io.Serializable;
 import java.util.Calendar;
-
 
 public class Mood implements Serializable {
 
@@ -45,7 +43,7 @@ public class Mood implements Serializable {
         else if (mood > 2) {
             firstLine = "C'est une excellente journée! ";
         } else {
-            firstLine = "Bonjour ";
+            firstLine = "Bonjour! ";
         }
         String str = firstLine + " Aujourd'hui, je suis de" + moods[mood] + " . " + comment;
         return str;
