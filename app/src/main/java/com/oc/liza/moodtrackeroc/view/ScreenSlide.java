@@ -41,7 +41,7 @@ public class ScreenSlide extends PagerAdapter {
      *
      * @param container is the view group
      * @param position  is changed every time the user slide the screen up or down
-     * @return
+     *
      */
     @NonNull
     @Override

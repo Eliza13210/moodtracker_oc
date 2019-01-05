@@ -1,5 +1,7 @@
 package com.oc.liza.moodtrackeroc.model;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -37,6 +39,7 @@ public class Mood implements Serializable {
      *
      * @return it returns a string with the mood and a comment if there is one
      */
+    @NonNull
     public String toString() {
         String firstLine;
         if (mood < 2) firstLine = "Fais attention! ";
